@@ -34,7 +34,7 @@ public class AudioManagerController : MonoBehaviour
         audioSource = GetComponent<AudioSource>();
     }
 
-    private void PlayAudio(Audio audio, float volume = 1f)
+    public static void PlayAudio(Audio audio, float volume = 1f)
     {
         instance.audioSource.PlayOneShot(instance.mAudioClip[(int)audio], volume);
     }
