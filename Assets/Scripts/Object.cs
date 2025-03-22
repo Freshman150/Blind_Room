@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public enum Material
+public enum Mat
 {
     METAL,
     STONE,
@@ -9,7 +9,7 @@ public enum Material
 
 public class Object : MonoBehaviour
 {
-    [SerializeField] private Material material;
+    [SerializeField] private Mat material;
 
     private void OnCollisionEnter(Collision collision)
     {
@@ -17,13 +17,13 @@ public class Object : MonoBehaviour
         {
             switch (material)
             {
-                case Material.METAL:
+                case Mat.METAL:
                     AudioManagerController.PlayAudioOnce(Audio.METALSOUND);
                     break;
-                case Material.STONE:
+                case Mat.STONE:
                     AudioManagerController.PlayAudioOnce(Audio.STONESCRATCH);
                     break;
-                case Material.WOOD:
+                case Mat.WOOD:
                     AudioManagerController.PlayAudioOnce(Audio.WOODSCRATCH);
                     break;
             }
