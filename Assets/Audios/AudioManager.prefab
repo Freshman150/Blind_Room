@@ -53,6 +53,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 5841e89e4dfe50f45b6b62f0bcf4a9db, type: 3}
   - {fileID: 8300000, guid: 378ab9e944611fb499cd5d99af8f1b0a, type: 3}
   - {fileID: 8300000, guid: 5bfab0879ded21641b24e11231ba82a7, type: 3}
+  - {fileID: 8300000, guid: 531788d00f69e794c954a1473ef411c7, type: 3}
 --- !u!82 &970741730264734299
 AudioSource:
   m_ObjectHideFlags: 0
@@ -110,7 +111,7 @@ AudioSource:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 0
+      value: 1
       inSlope: 0
       outSlope: 0
       tangentMode: 0

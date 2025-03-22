@@ -8,7 +8,8 @@ public enum Audio
     DOORSQUEAK,
     METALSOUND,
     STONESCRATCH,
-    WOODSCRATCH
+    WOODSCRATCH,
+    SPARK
 }
 
 public class AudioManagerController : MonoBehaviour
@@ -39,8 +40,28 @@ public class AudioManagerController : MonoBehaviour
         audioSource = GetComponent<AudioSource>();
     }
 
-    public static void PlayAudio(Audio audio, float volume = 1f)
+    public static void PlayAudioOnce(Audio audio, float volume = 1f)
     {
+        if (instance.audioSource.loop)
+        {
+            instance.audioSource.loop = false;
+        }
         instance.audioSource.PlayOneShot(instance.mAudioClip[(int)audio], volume);
+    }
+
+    public static void PlayAudioLoop(Audio audio, float volume = 1f)
+    {
+        if (!instance.audioSource.loop)
+        {
+            instance.audioSource.loop = true;
+        }
+        instance.audioSource.clip = instance.mAudioClip[(int)audio];
+        instance.audioSource.volume = volume;
+        instance.audioSource.Play();
+    }
+
+    public static void Stop()
+    {
+        instance.audioSource.Stop();
     }
 }
