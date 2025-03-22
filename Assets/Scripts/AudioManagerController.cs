@@ -3,7 +3,12 @@ using UnityEngine;
 public enum Audio
 {
     KEY,
-    FOOTSTEP
+    FOOTSTEP,
+    UNLOCKDOOR,
+    DOORSQUEAK,
+    METALSOUND,
+    STONESCRATCH,
+    WOODSCRATCH
 }
 
 public class AudioManagerController : MonoBehaviour
