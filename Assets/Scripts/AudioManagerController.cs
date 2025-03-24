@@ -19,7 +19,7 @@ public class AudioManagerController : MonoBehaviour
 
     [SerializeField] private AudioClip[] mAudioClip;
 
-    private AudioSource audioSource;
+    private AudioSource[] audioSources;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Awake()
@@ -37,31 +37,37 @@ public class AudioManagerController : MonoBehaviour
 
     private void Start()
     {
-        audioSource = GetComponent<AudioSource>();
+        audioSources = GetComponents<AudioSource>();
     }
 
     public static void PlayAudioOnce(Audio audio, float volume = 1f)
     {
-        if (instance.audioSource.loop)
+        if (instance.audioSources[0].loop)
         {
-            instance.audioSource.loop = false;
+            instance.audioSources[0].loop = false;
         }
-        instance.audioSource.PlayOneShot(instance.mAudioClip[(int)audio], volume);
+        instance.audioSources[0].PlayOneShot(instance.mAudioClip[(int)audio], volume);
     }
 
     public static void PlayAudioLoop(Audio audio, float volume = 1f)
     {
-        if (!instance.audioSource.loop)
+        if (!instance.audioSources[0].loop)
         {
-            instance.audioSource.loop = true;
+            instance.audioSources[0].loop = true;
         }
-        instance.audioSource.clip = instance.mAudioClip[(int)audio];
-        instance.audioSource.volume = volume;
-        instance.audioSource.Play();
+        instance.audioSources[0].clip = instance.mAudioClip[(int)audio];
+        instance.audioSources[0].volume = volume;
+        instance.audioSources[0].Play();
+    }
+
+    public static void PlayFootsteps()
+    {
+        instance.audioSources[1].pitch = Random.Range(0.8f, 1.2f);
+        instance.audioSources[1].PlayOneShot(instance.mAudioClip[(int)Audio.FOOTSTEP], 1f);
     }
 
     public static void Stop()
     {
-        instance.audioSource.Stop();
+        instance.audioSources[0].Stop();
     }
 }
