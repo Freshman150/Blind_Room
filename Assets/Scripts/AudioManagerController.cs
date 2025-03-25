@@ -62,7 +62,7 @@ public class AudioManagerController : MonoBehaviour
 
     public static void PlayFootsteps()
     {
-        instance.audioSources[1].pitch = Random.Range(0.8f, 1.2f);
+        instance.audioSources[1].pitch = Random.Range(0.5f, 1f);
         instance.audioSources[1].PlayOneShot(instance.mAudioClip[(int)Audio.FOOTSTEP], 1f);
     }
 
