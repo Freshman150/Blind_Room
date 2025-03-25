@@ -46,6 +46,7 @@ public class AudioManagerController : MonoBehaviour
         {
             instance.audioSources[0].loop = false;
         }
+        instance.audioSources[0].pitch = Random.Range(0.2f, volume);
         instance.audioSources[0].PlayOneShot(instance.mAudioClip[(int)audio], volume);
     }
 

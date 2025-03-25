@@ -340,6 +340,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: EndLevelCanvas
       objectReference: {fileID: 0}
+    - target: {fileID: 4454597228930701722, guid: 201b921c201ce12409c830545689db18, type: 3}
+      propertyPath: m_SortingLayerID
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6012415023599356609, guid: 201b921c201ce12409c830545689db18, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -419,6 +423,10 @@ PrefabInstance:
     - target: {fileID: 6012415023599356609, guid: 201b921c201ce12409c830545689db18, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6333835968773311742, guid: 201b921c201ce12409c830545689db18, type: 3}
+      propertyPath: m_PresetInfoIsWorld
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

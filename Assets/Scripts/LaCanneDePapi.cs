@@ -71,6 +71,7 @@ public class LaCanneDePapi : MonoBehaviour
 
         if (Physics.Raycast(ray, out RaycastHit hit, rayLength))
         {
+            
             float distance = hit.distance;
 
             // Intensity and duration based on proximity
@@ -79,6 +80,25 @@ public class LaCanneDePapi : MonoBehaviour
 
             // Send haptic impulse
             player.SendHapticImpulse(intensity, duration, 0.5f);
+            
+            // Play hit object material sound
+            Object obj = hit.collider.GetComponent<Object>();
+            if (obj != null)
+            {
+                Mat mat = obj.material;
+                switch (mat)
+                {
+                    case Mat.METAL:
+                        AudioManagerController.PlayAudioOnce(Audio.METALSOUND, 0.5f);
+                        break;
+                    case Mat.STONE:
+                        AudioManagerController.PlayAudioOnce(Audio.STONESCRATCH, 0.5f);
+                        break;
+                    case Mat.WOOD:
+                        AudioManagerController.PlayAudioOnce(Audio.WOODSCRATCH, 0.5f);
+                        break;
+                }
+            }
 
             // Debug info
             Debug.Log($"Haptic Impulse: Intensity = {intensity:F2}, Duration = {duration:F2}, Distance = {distance:F2}");
