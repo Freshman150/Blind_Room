@@ -8,7 +8,7 @@ public class GameManager : MonoBehaviour
 {
     [SerializeField] private GameObject EndLevelCanvas;
     [SerializeField] private Transform head;
-    private float distance = 2f;
+    private float distance = 1f;
 
     private void Start()
     {
@@ -19,7 +19,7 @@ public class GameManager : MonoBehaviour
     {
         if (EndLevelCanvas.activeSelf)
         {
-            EndLevelCanvas.transform.position = head.position + new Vector3(head.forward.x, 0.5f, head.forward.z).normalized * distance;
+            EndLevelCanvas.transform.position = head.position + new Vector3(head.forward.x, 0f, head.forward.z).normalized * distance;
         }
 
         EndLevelCanvas.transform.LookAt(new Vector3(head.position.x, EndLevelCanvas.transform.position.y, head.position.z));
