@@ -1,17 +1,34 @@
 using UnityEngine;
+using UnityEngine.XR.Interaction.Toolkit.Interactables;
 
 public class KeyController : MonoBehaviour
 {
+    [SerializeField] private PlayerController playerController;
     [SerializeField] private GameObject Door;
+    [SerializeField] private XRGrabInteractable grabInteractable;
 
-    private void OnTriggerEnter(Collider other)
+    private void Start()
     {
-        if (other.CompareTag("Player"))
+        grabInteractable = GetComponent<XRGrabInteractable>();
+    }
+
+    private void Update()
+    {
+        if (playerController != null)
         {
-            AudioManagerController.PlayAudioOnce(Audio.KEY);
-            Door.SetActive(true);
-            Destroy(gameObject);
-            other.GetComponent<PlayerController>().hasKey = true;
+            if (grabInteractable.isSelected && !playerController.hasKey)
+            {
+                AudioManagerController.PlayAudioOnce(Audio.KEY);
+                playerController.hasKey = true;
+                Door.GetComponent<MeshCollider>().isTrigger = true;
+                Door.GetComponent<AudioSource>().Play();
+            }
+            if (!grabInteractable.isSelected && playerController.hasKey)
+            {
+                playerController.hasKey = false;
+                Door.GetComponent<MeshCollider>().isTrigger = false;
+                Door.GetComponent<AudioSource>().Stop();
+            }
         }
     }
 

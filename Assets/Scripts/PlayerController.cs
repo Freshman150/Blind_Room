@@ -38,6 +38,7 @@ public class PlayerController : MonoBehaviour
         if (hasKey && other.name == "Door")
         {
             StartCoroutine(UnlockDoorCoroutine());
+            other.GetComponent<AudioSource>().Stop();
         }
     }
 
@@ -46,7 +47,7 @@ public class PlayerController : MonoBehaviour
         AudioManagerController.PlayAudioOnce(Audio.UNLOCKDOOR);
         yield return new WaitForSeconds(0.5f);
         AudioManagerController.PlayAudioOnce(Audio.DOORSQUEAK);
-        yield return new WaitForSeconds(1.5f);
-        SceneManager.LoadScene("End");
+        //yield return new WaitForSeconds(1.5f);
+        //SceneManager.LoadScene("End");
     }
 }
