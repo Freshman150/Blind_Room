@@ -70,13 +70,13 @@ public class VRMenuSpawner : MonoBehaviour
             {
                 XRGeneralSettings.Instance.Manager.DeinitializeLoader();
                 yield return null;  // Attendre 1 frame
-                Debug.Log($"Loading Scene: {sceneName}");
-                SceneManager.LoadScene(sceneName);
                 yield return null;  // Attendre 1 autre frame
                 XRGeneralSettings.Instance.Manager.InitializeLoaderSync();
                 XRGeneralSettings.Instance.Manager.StartSubsystems();
             }
-            StartCoroutine(ReloadXR());
+            //StartCoroutine(ReloadXR());
+            Debug.Log($"Loading Scene: {sceneName}");
+            SceneManager.LoadScene(sceneName);
         }
     }
 }

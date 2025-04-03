@@ -108,7 +108,8 @@ public class LidarSystem : MonoBehaviour
     {
         yield return new WaitForSeconds(maxTimeToRenderPoints);
         point.SetActive(false);
-        activePoints.Dequeue();
+        if( activePoints.Count > 0)
+            activePoints.Dequeue();
         pointPool.Enqueue(point);
     }
     
