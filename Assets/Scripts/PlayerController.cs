@@ -5,6 +5,7 @@ using UnityEngine.SceneManagement;
 public class PlayerController : MonoBehaviour
 {
     [SerializeField] private CharacterController characterController;
+    [SerializeField] private GameObject key;
 
     private float lastVelocity = 0f;
     private float stepInterval = 0.5f;
@@ -39,6 +40,8 @@ public class PlayerController : MonoBehaviour
         {
             StartCoroutine(UnlockDoorCoroutine());
             other.GetComponent<AudioSource>().Stop();
+            Destroy(key);
+            hasKey = false;
         }
     }
 
