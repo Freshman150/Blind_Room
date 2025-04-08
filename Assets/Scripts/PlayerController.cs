@@ -5,7 +5,8 @@ using UnityEngine.SceneManagement;
 public class PlayerController : MonoBehaviour
 {
     [SerializeField] private CharacterController characterController;
-    [SerializeField] private GameObject key;
+    //[SerializeField] private GameObject key;
+    [SerializeField] private GameObject secondKey;
 
     private float lastVelocity = 0f;
     private float stepInterval = 0.5f;
@@ -36,12 +37,18 @@ public class PlayerController : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (hasKey && other.name == "Door")
+        if (hasKey && other.name == "SerrureSongTrigger")
         {
             StartCoroutine(UnlockDoorCoroutine());
             other.GetComponent<AudioSource>().Stop();
-            Destroy(key);
+            other.GetComponent<Collider>().enabled = false;
+            //Destroy(key);
+            secondKey.SetActive(true);
             hasKey = false;
+        }
+        if (hasKey && other.name == "SerrureSongTrigger2")
+        {
+            StartCoroutine(UnlockDoor2Coroutine());
         }
     }
 
@@ -50,7 +57,14 @@ public class PlayerController : MonoBehaviour
         AudioManagerController.PlayAudioOnce(Audio.UNLOCKDOOR);
         yield return new WaitForSeconds(0.5f);
         AudioManagerController.PlayAudioOnce(Audio.DOORSQUEAK);
-        //yield return new WaitForSeconds(1.5f);
-        //SceneManager.LoadScene("End");
+    }
+
+    IEnumerator UnlockDoor2Coroutine()
+    {
+        AudioManagerController.PlayAudioOnce(Audio.UNLOCKDOOR);
+        yield return new WaitForSeconds(0.5f);
+        AudioManagerController.PlayAudioOnce(Audio.DOORSQUEAK);
+        yield return new WaitForSeconds(1.5f);
+        SceneManager.LoadScene("End");
     }
 }
