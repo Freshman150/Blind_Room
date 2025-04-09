@@ -1276,7 +1276,7 @@
                 {
                     "name": "",
                     "id": "458fb981-92c2-47e3-8d14-c8d9190fcde9",
-                    "path": "<XRController>{LeftHand}/{GripButton}",
+                    "path": "<XRController>{LeftHand}/{SecondaryButton}",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -2407,7 +2407,7 @@
                 {
                     "name": "",
                     "id": "15c92548-5b91-4e92-af21-56ff49ac64c2",
-                    "path": "<XRController>{RightHand}/{GripButton}",
+                    "path": "<XRController>{RightHand}/{SecondaryButton}",
                     "interactions": "",
                     "processors": "",
                     "groups": "",

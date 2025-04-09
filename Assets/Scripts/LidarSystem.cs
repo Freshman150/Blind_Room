@@ -106,7 +106,8 @@ public class LidarSystem : MonoBehaviour
 
     private IEnumerator DeactivatePointAfterTime(GameObject point)
     {
-        yield return new WaitForSeconds(maxTimeToRenderPoints);
+        float randomDelay = UnityEngine.Random.Range(-1f, 1f);
+        yield return new WaitForSeconds(maxTimeToRenderPoints + randomDelay);
         point.SetActive(false);
         if( activePoints.Count > 0)
             activePoints.Dequeue();

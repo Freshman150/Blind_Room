@@ -25,7 +25,7 @@ public class PlayerController : MonoBehaviour
     void FixedUpdate()
     {
         // Play footsteps sound
-        // pour des raisons obscures characterController.velocity.magnitude se bloque à 2.5 parfois
+        // pour des raisons obscures characterController.velocity.magnitude se bloque ï¿½ 2.5 parfois
         isMoving = characterController.velocity.magnitude > 2f && lastVelocity != characterController.velocity.magnitude;
         if (isMoving && Time.time >= nextStepTime)
         {
@@ -40,6 +40,7 @@ public class PlayerController : MonoBehaviour
         if (hasKey && other.name == "SerrureSongTrigger")
         {
             StartCoroutine(UnlockDoorCoroutine());
+            other.transform.parent.gameObject.layer = LayerMask.NameToLayer("Default");
             other.GetComponent<AudioSource>().Stop();
             other.GetComponent<Collider>().enabled = false;
             //Destroy(key);
@@ -65,6 +66,7 @@ public class PlayerController : MonoBehaviour
         yield return new WaitForSeconds(0.5f);
         AudioManagerController.PlayAudioOnce(Audio.DOORSQUEAK);
         yield return new WaitForSeconds(1.5f);
+        Timer.End();
         SceneManager.LoadScene("End");
     }
 }

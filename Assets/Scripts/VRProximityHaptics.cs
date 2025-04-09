@@ -16,13 +16,15 @@ public class VRProximityHaptics : MonoBehaviour
     [SerializeField] private HapticImpulsePlayer rightHapticPlayer;
     [SerializeField] private float minHapticDuration = 0.05f;
     [SerializeField] private float maxHapticDuration = 0.2f;
-    [SerializeField] private float hapticInterval = 0.3f; // Interval between impulses
-    [SerializeField] private float continuousHapticIntensity = 1.0f; // Full intensity for continuous mode
-    [SerializeField] private float continuousHapticDuration = 0.1f; // Short bursts to keep vibrating
+    [SerializeField] private float hapticInterval = 0.3f;
+    [SerializeField] private float continuousHapticIntensity = 1.0f;
+    [SerializeField] private float continuousHapticDuration = 0.1f;
 
     [Header("Visual Feedback")]
-    public GameObject leftInnerSphereVisual; // Assign a red sphere for the left hand
-    public GameObject rightInnerSphereVisual; // Assign a red sphere for the right hand
+    public GameObject leftInnerSphereVisual;
+    public GameObject rightInnerSphereVisual;
+    public Material defaultRedMaterial;
+    public Material blueMaterial;
 
     private float lastLeftHapticTime;
     private float lastRightHapticTime;
@@ -30,73 +32,139 @@ public class VRProximityHaptics : MonoBehaviour
     private bool leftInsideInnerSphere = false;
     private bool rightInsideInnerSphere = false;
 
+    private int environmentLayer = 8;
+    private int lidarTriggerLayer = 7;
+    private int lidar2TriggerLayer = 9;
+
     private void Update()
     {
-        ProcessProximity(leftController, leftHapticPlayer, leftInnerSphereVisual, ref lastLeftHapticTime, ref leftInsideInnerSphere);
-        ProcessProximity(rightController, rightHapticPlayer, rightInnerSphereVisual, ref lastRightHapticTime, ref rightInsideInnerSphere);
+        ProcessProximity(
+            leftController,
+            leftHapticPlayer,
+            leftInnerSphereVisual,
+            ref lastLeftHapticTime,
+            ref leftInsideInnerSphere
+        );
+
+        ProcessProximity(
+            rightController,
+            rightHapticPlayer,
+            rightInnerSphereVisual,
+            ref lastRightHapticTime,
+            ref rightInsideInnerSphere
+        );
     }
 
-    private void ProcessProximity(Transform controller, HapticImpulsePlayer hapticPlayer, GameObject innerSphereVisual, ref float lastHapticTime, ref bool isInsideInnerSphere)
+    private void ProcessProximity(
+        Transform controller,
+        HapticImpulsePlayer hapticPlayer,
+        GameObject innerSphereVisual,
+        ref float lastHapticTime,
+        ref bool isInsideInnerSphere
+    )
     {
         Collider[] hitColliders = Physics.OverlapSphere(controller.position, outerSphereRadius);
+
         float closestDistance = float.MaxValue;
         bool isTouchingInnerSphere = false;
+        bool showBlue = false;
 
         foreach (var col in hitColliders)
         {
-            if (col.gameObject == controller.gameObject) continue; // Ignore self-collisions
+            if (col.gameObject == controller.gameObject)
+                continue;
 
-            float distance = Vector3.Distance(controller.position, col.ClosestPoint(controller.position));
+            int colLayer = col.gameObject.layer;
+            Vector3 closest = col.ClosestPointOnBounds(controller.position);
+            float distance = Vector3.Distance(controller.position, closest);
 
-            if (distance <= innerSphereRadius)
+            // Évite les fausses distances nulles
+            if (distance < 0.01f)
+                distance = Vector3.Distance(controller.position, col.bounds.center);
+
+            // 💢 Ignore anything not in environment or lidar layer
+            if (colLayer != environmentLayer && colLayer != lidarTriggerLayer && colLayer != lidar2TriggerLayer)
+                continue;
+
+            // 🔵 Check if it's a Lidar-Trigger object (layer 7)
+            if (colLayer == lidarTriggerLayer || colLayer == lidar2TriggerLayer)
             {
-                isTouchingInnerSphere = true;
-                break; // No need to check further, max intensity reached
+                // Show blue sphere if Lidar layer is detected
+                showBlue = true;
             }
 
-            if (distance < closestDistance)
+            // 🔴 Haptics only apply to Environment layer (layer 8)
+            if (colLayer == environmentLayer)
             {
-                closestDistance = distance;
+                if (distance <= innerSphereRadius)
+                {
+                    isTouchingInnerSphere = true;
+                    break; // No need to continue
+                }
+
+                if (distance < closestDistance)
+                {
+                    closestDistance = distance;
+                }
             }
         }
 
+        // 🔥 Inner Sphere Feedback
         if (isTouchingInnerSphere)
         {
-            // Continuous full vibration when inside the small sphere
-            if (!isInsideInnerSphere) // Start vibration when entering
+            if (!isInsideInnerSphere)
             {
                 hapticPlayer.SendHapticImpulse(continuousHapticIntensity, continuousHapticDuration, 0.5f);
-                //Debug.Log($"Continuous Haptic {hapticPlayer.name}: Full Intensity!");
             }
             isInsideInnerSphere = true;
 
-            // Activate red sphere if not already active
             if (innerSphereVisual && !innerSphereVisual.activeSelf)
             {
                 innerSphereVisual.SetActive(true);
             }
+
+            SetSphereMaterial(innerSphereVisual, showBlue ? blueMaterial : defaultRedMaterial);
         }
         else
         {
             isInsideInnerSphere = false;
 
-            // Deactivate red sphere if it was active
-            if (innerSphereVisual && innerSphereVisual.activeSelf)
+            // 🟢 Show sphere in blue if Lidar layer is detected (even if not in inner radius)
+            if (showBlue)
             {
-                innerSphereVisual.SetActive(false);
+                if (innerSphereVisual && !innerSphereVisual.activeSelf)
+                {
+                    innerSphereVisual.SetActive(true);
+                }
+                SetSphereMaterial(innerSphereVisual, blueMaterial);
+            }
+            else
+            {
+                if (innerSphereVisual && innerSphereVisual.activeSelf)
+                {
+                    innerSphereVisual.SetActive(false);
+                }
             }
 
+            // 💢 Normal proximity haptics
             if (closestDistance < outerSphereRadius && Time.time - lastHapticTime >= hapticInterval)
             {
-                // Scaled vibration based on proximity
                 float intensity = 1 - (closestDistance / outerSphereRadius);
                 float duration = Mathf.Lerp(minHapticDuration, maxHapticDuration, intensity);
                 hapticPlayer.SendHapticImpulse(intensity, duration, 0.5f);
                 lastHapticTime = Time.time;
-                //Debug.Log($"Haptic {hapticPlayer.name}: Intensity = {intensity:F2}, Duration = {duration:F2}");
             }
         }
     }
+
+    private void SetSphereMaterial(GameObject sphere, Material mat)
+    {
+        if (sphere.TryGetComponent<Renderer>(out Renderer rend))
+        {
+            rend.material = mat;
+        }
+    }
+
     private void OnDrawGizmos()
     {
         if (leftController)
