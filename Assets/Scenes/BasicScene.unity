@@ -6648,8 +6648,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   leftController: {fileID: 441087511}
   rightController: {fileID: 441087512}
-  outerSphereRadius: 1
-  innerSphereRadius: 0.2
+  outerSphereRadius: 0.6
+  innerSphereRadius: 0.15
   leftHapticPlayer: {fileID: 441087510}
   rightHapticPlayer: {fileID: 441087509}
   minHapticDuration: 0.05
