@@ -31,6 +31,11 @@ public class GameManager : MonoBehaviour
     {
         // Quit game
         Application.Quit();
+
+        // Quit in editor
+#if UNITY_EDITOR
+        UnityEditor.EditorApplication.isPlaying = false;
+#endif
     }
 
     public void Retry()
