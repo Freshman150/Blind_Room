@@ -46,6 +46,7 @@ public class VRMenuRaycaster : MonoBehaviour
         if (menuButton)
         {
             DummyNarrator.Instance.ReadOption(menuButton.GetDisplayName());
+            StartCoroutine(DummyNarrator.Instance.PlaySpeech(DummyNarrator.Instance._hoverSpeech));
         }
 
         Debug.Log($"Looking at: {button.name}");
@@ -58,6 +59,7 @@ public class VRMenuRaycaster : MonoBehaviour
             VRMenuButton menuButton = lastHoveredButton.GetComponent<VRMenuButton>();
             if (menuButton)
             {
+                StartCoroutine(DummyNarrator.Instance.PlaySpeech(DummyNarrator.Instance._onClickSpeech));
                 menuButton.Select();
             }
         }

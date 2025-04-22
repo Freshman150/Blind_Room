@@ -40,6 +40,7 @@ public class PlayerController : MonoBehaviour
         if (hasKey && other.name == "SerrureSongTrigger")
         {
             StartCoroutine(UnlockDoorCoroutine());
+            AudioManagerController.PlayLabBegin();
             other.transform.parent.gameObject.layer = LayerMask.NameToLayer("Default");
             other.GetComponent<AudioSource>().Stop();
             other.GetComponent<Collider>().enabled = false;
@@ -50,6 +51,10 @@ public class PlayerController : MonoBehaviour
         if (hasKey && other.name == "SerrureSongTrigger2")
         {
             StartCoroutine(UnlockDoor2Coroutine());
+        }
+        if (other.name == "LabEndTrigger")
+        {
+            AudioManagerController.PlayLabEnd();
         }
     }
 
