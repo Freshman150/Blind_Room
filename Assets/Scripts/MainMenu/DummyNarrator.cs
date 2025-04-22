@@ -18,7 +18,7 @@ public class DummyNarrator : MonoBehaviour
     }
     private void Start()
     {
-        StartCoroutine(PlaySpeech(_beginningSpeech));
+        //StartCoroutine(PlaySpeech(_beginningSpeech));
     }
 
     public void ReadOption(string option)
@@ -29,7 +29,7 @@ public class DummyNarrator : MonoBehaviour
     public IEnumerator PlaySpeech(AudioClip audio)
     {
         AudioSource audioSource = GetComponent<AudioSource>();
-        if (audioSource)
+        if (audioSource && !audioSource.isPlaying)
         {
             audioSource.clip = audio;
             audioSource.Play();
