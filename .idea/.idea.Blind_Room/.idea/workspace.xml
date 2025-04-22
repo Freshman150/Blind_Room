@@ -5,18 +5,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="9b2e0f82-dd70-4a1b-93ef-a6c18d6040e1" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.Blind_Room/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Blind_Room/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Samples/XR Interaction Toolkit/3.0.7/Starter Assets/Prefabs/XR Origin (XR Rig).prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Samples/XR Interaction Toolkit/3.0.7/Starter Assets/Prefabs/XR Origin (XR Rig).prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Samples/XR Interaction Toolkit/3.0.7/Starter Assets/XRI Default Input Actions.inputactions" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Samples/XR Interaction Toolkit/3.0.7/Starter Assets/XRI Default Input Actions.inputactions" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scenes/BasicScene.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/BasicScene.unity" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scenes/TestLidar.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/TestLidar.unity" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/PointLidar.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/PointLidar.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scenes/MainMenu.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/MainMenu.unity" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/LidarSystem.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/LidarSystem.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/PlayerController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/PlayerController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Settings/Project Configuration/BasicScene.scenetemplate" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Settings/Project Configuration/BasicScene.scenetemplate" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Timer.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Timer.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/VRProximityHaptics.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/VRProximityHaptics.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/MainMenu/VRMenuRaycaster.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/MainMenu/VRMenuRaycaster.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/MainMenu/VRMenuSpawner.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/MainMenu/VRMenuSpawner.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/TextMesh Pro/Resources/Fonts &amp; Materials/LiberationSans SDF - Fallback.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/TextMesh Pro/Resources/Fonts &amp; Materials/LiberationSans SDF - Fallback.asset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ProjectSettings/TagManager.asset" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/TagManager.asset" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -123,6 +117,7 @@
       <workItem from="1743646427632" duration="8558000" />
       <workItem from="1743712365592" duration="6116000" />
       <workItem from="1744180813051" duration="6499000" />
+      <workItem from="1745356250800" duration="640000" />
     </task>
     <servers />
   </component>

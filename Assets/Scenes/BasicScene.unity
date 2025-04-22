@@ -5009,6 +5009,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   leftClickInput: {fileID: -3643036312938481632, guid: c348712bda248c246b8c49b3db54643f, type: 3}
+  rightClickInput: {fileID: -3643036312938481632, guid: c348712bda248c246b8c49b3db54643f, type: 3}
 --- !u!1 &784593771
 GameObject:
   m_ObjectHideFlags: 0
@@ -11584,9 +11585,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   totalPointsToDisplay: 5000
-  pointsPerClick: 200
+  pointsPerClick: 100
   pointsPerFrame: 5
   maxTimeToRenderPoints: 5
+  minSpamButton: 3
   pointPrefab: {fileID: 8315808628957201726, guid: bda86bcbdd158fe48bb7554047ef03e0, type: 3}
   headsetTransform: {fileID: 1933323944}
 --- !u!1 &2001579192

@@ -47,6 +47,7 @@ public class VRMenuSpawner : MonoBehaviour
 
             // Spawn button
             GameObject button = Instantiate(buttonPrefab, buttonPosition, Quaternion.identity);
+            button.gameObject.SetActive(true);
             button.transform.LookAt(new Vector3(playerHead.position.x, button.transform.position.y, playerHead.position.z)); // Face the player
             button.name = menuDisplayNames[i]; // Set display name for debugging
 

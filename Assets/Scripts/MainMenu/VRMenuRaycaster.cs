@@ -24,7 +24,7 @@ public class VRMenuRaycaster : MonoBehaviour
         if (Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity, menuLayer))
         {
             GameObject hitButton = hit.collider.gameObject;
-
+            hapticPlayer.SendHapticImpulse(0.5f, 0.1f, 0.5f);
             if (hitButton != lastHoveredButton)
             {
                 lastHoveredButton = hitButton;
@@ -39,7 +39,6 @@ public class VRMenuRaycaster : MonoBehaviour
 
     private void OnButtonFocused(GameObject button)
     {
-        hapticPlayer.SendHapticImpulse(0.5f, 0.1f, 0.5f);
         
         // Get button name for narration
         VRMenuButton menuButton = button.GetComponent<VRMenuButton>();
