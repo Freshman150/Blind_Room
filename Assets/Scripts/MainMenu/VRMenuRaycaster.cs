@@ -8,7 +8,8 @@ public class VRMenuRaycaster : MonoBehaviour
     public Transform playerHead; // Headset position
     public LayerMask menuLayer; // Menu object layer
     public InputActionReference selectButton; // Controller button for selection
-    public HapticImpulsePlayer hapticPlayer;
+    public HapticImpulsePlayer rightHapticPlayer;
+    public HapticImpulsePlayer leftHapticPlayer;
 
     private GameObject lastHoveredButton;
 
@@ -24,7 +25,8 @@ public class VRMenuRaycaster : MonoBehaviour
         if (Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity, menuLayer))
         {
             GameObject hitButton = hit.collider.gameObject;
-            hapticPlayer.SendHapticImpulse(0.5f, 0.1f, 0.5f);
+            rightHapticPlayer.SendHapticImpulse(0.5f, 0.1f, 0.5f);
+            leftHapticPlayer.SendHapticImpulse(0.5f, 0.1f, 0.5f);
             if (hitButton != lastHoveredButton)
             {
                 lastHoveredButton = hitButton;
