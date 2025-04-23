@@ -5,7 +5,8 @@ using UnityEngine.SceneManagement;
 public class PlayerController : MonoBehaviour
 {
     [SerializeField] private CharacterController characterController;
-    [SerializeField] private GameObject key;
+    //[SerializeField] private GameObject key;
+    [SerializeField] private GameObject secondKey;
 
     private float lastVelocity = 0f;
     private float stepInterval = 0.5f;
@@ -24,7 +25,7 @@ public class PlayerController : MonoBehaviour
     void FixedUpdate()
     {
         // Play footsteps sound
-        // pour des raisons obscures characterController.velocity.magnitude se bloque à 2.5 parfois
+        // pour des raisons obscures characterController.velocity.magnitude se bloque ï¿½ 2.5 parfois
         isMoving = characterController.velocity.magnitude > 2f && lastVelocity != characterController.velocity.magnitude;
         if (isMoving && Time.time >= nextStepTime)
         {
@@ -36,12 +37,24 @@ public class PlayerController : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (hasKey && other.name == "Door")
+        if (hasKey && other.name == "SerrureSongTrigger")
         {
             StartCoroutine(UnlockDoorCoroutine());
+            AudioManagerController.PlayLabBegin();
+            other.transform.parent.gameObject.layer = LayerMask.NameToLayer("Default");
             other.GetComponent<AudioSource>().Stop();
-            Destroy(key);
+            other.GetComponent<Collider>().enabled = false;
+            //Destroy(key);
+            secondKey.SetActive(true);
             hasKey = false;
+        }
+        if (hasKey && other.name == "SerrureSongTrigger2")
+        {
+            StartCoroutine(UnlockDoor2Coroutine());
+        }
+        if (other.name == "LabEndTrigger")
+        {
+            AudioManagerController.PlayLabEnd();
         }
     }
 
@@ -50,7 +63,15 @@ public class PlayerController : MonoBehaviour
         AudioManagerController.PlayAudioOnce(Audio.UNLOCKDOOR);
         yield return new WaitForSeconds(0.5f);
         AudioManagerController.PlayAudioOnce(Audio.DOORSQUEAK);
-        //yield return new WaitForSeconds(1.5f);
-        //SceneManager.LoadScene("End");
+    }
+
+    IEnumerator UnlockDoor2Coroutine()
+    {
+        AudioManagerController.PlayAudioOnce(Audio.UNLOCKDOOR);
+        yield return new WaitForSeconds(0.5f);
+        AudioManagerController.PlayAudioOnce(Audio.DOORSQUEAK);
+        yield return new WaitForSeconds(1.5f);
+        Timer.End();
+        SceneManager.LoadScene("End");
     }
 }

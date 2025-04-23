@@ -10,6 +10,7 @@ public class LidarSystem : MonoBehaviour
     public int pointsPerClick = 500;         // How many points are created per click
     public int pointsPerFrame = 50;          // How many points are instantiated per frame
     public float maxTimeToRenderPoints = 1f; // Time before points fade
+    public float minSpamButton = 2f;
 
     [Header("Point Settings")]
     public GameObject pointPrefab;           // Prefab for the points
@@ -21,6 +22,8 @@ public class LidarSystem : MonoBehaviour
 
     
     public static event Action OnClickDetected; // Event to trigger Lidar
+    private float lastLidarScan;
+    
     
 
     void Start()
@@ -44,6 +47,9 @@ public class LidarSystem : MonoBehaviour
 
     private void StartLidarScan()
     {
+        if( Time.time - lastLidarScan < minSpamButton)
+            return;
+        lastLidarScan = Time.time;
         pointsLeftToSpawn = pointsPerClick;
         StartCoroutine(SpawnPointsOverTime());
     }
@@ -106,7 +112,8 @@ public class LidarSystem : MonoBehaviour
 
     private IEnumerator DeactivatePointAfterTime(GameObject point)
     {
-        yield return new WaitForSeconds(maxTimeToRenderPoints);
+        float randomDelay = UnityEngine.Random.Range(-1f, 1f);
+        yield return new WaitForSeconds(maxTimeToRenderPoints + randomDelay);
         point.SetActive(false);
         if( activePoints.Count > 0)
             activePoints.Dequeue();

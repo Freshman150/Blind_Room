@@ -8,7 +8,8 @@ public class VRMenuRaycaster : MonoBehaviour
     public Transform playerHead; // Headset position
     public LayerMask menuLayer; // Menu object layer
     public InputActionReference selectButton; // Controller button for selection
-    public HapticImpulsePlayer hapticPlayer;
+    public HapticImpulsePlayer rightHapticPlayer;
+    public HapticImpulsePlayer leftHapticPlayer;
 
     private GameObject lastHoveredButton;
 
@@ -24,7 +25,8 @@ public class VRMenuRaycaster : MonoBehaviour
         if (Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity, menuLayer))
         {
             GameObject hitButton = hit.collider.gameObject;
-
+            rightHapticPlayer.SendHapticImpulse(0.5f, 0.1f, 0.5f);
+            leftHapticPlayer.SendHapticImpulse(0.5f, 0.1f, 0.5f);
             if (hitButton != lastHoveredButton)
             {
                 lastHoveredButton = hitButton;
@@ -39,13 +41,13 @@ public class VRMenuRaycaster : MonoBehaviour
 
     private void OnButtonFocused(GameObject button)
     {
-        hapticPlayer.SendHapticImpulse(0.5f, 0.1f, 0.5f);
         
         // Get button name for narration
         VRMenuButton menuButton = button.GetComponent<VRMenuButton>();
         if (menuButton)
         {
             DummyNarrator.Instance.ReadOption(menuButton.GetDisplayName());
+            StartCoroutine(DummyNarrator.Instance.PlaySpeech(DummyNarrator.Instance._hoverSpeech));
         }
 
         Debug.Log($"Looking at: {button.name}");
@@ -58,6 +60,7 @@ public class VRMenuRaycaster : MonoBehaviour
             VRMenuButton menuButton = lastHoveredButton.GetComponent<VRMenuButton>();
             if (menuButton)
             {
+                StartCoroutine(DummyNarrator.Instance.PlaySpeech(DummyNarrator.Instance._onClickSpeech));
                 menuButton.Select();
             }
         }

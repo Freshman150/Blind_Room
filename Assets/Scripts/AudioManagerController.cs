@@ -9,7 +9,10 @@ public enum Audio
     METALSOUND,
     STONESCRATCH,
     WOODSCRATCH,
-    SPARK
+    SPARK,
+    STARTLEVEL,
+    LABBEGIN,
+    LABEND
 }
 
 public class AudioManagerController : MonoBehaviour
@@ -65,6 +68,16 @@ public class AudioManagerController : MonoBehaviour
     {
         instance.audioSources[1].pitch = Random.Range(0.5f, 1f);
         instance.audioSources[1].PlayOneShot(instance.mAudioClip[(int)Audio.FOOTSTEP], 1f);
+    }
+
+    public static void PlayLabBegin()
+    {
+        instance.audioSources[2].PlayOneShot(instance.mAudioClip[(int)Audio.LABBEGIN], 1f);
+    }
+
+    public static void PlayLabEnd()
+    {
+        instance.audioSources[2].PlayOneShot(instance.mAudioClip[(int)Audio.LABEND], 1f);
     }
 
     public static void Stop()
