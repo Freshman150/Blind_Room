@@ -46,7 +46,6 @@ public class VRMenuRaycaster : MonoBehaviour
         VRMenuButton menuButton = button.GetComponent<VRMenuButton>();
         if (menuButton)
         {
-            DummyNarrator.Instance.ReadOption(menuButton.GetDisplayName());
             StartCoroutine(DummyNarrator.Instance.PlaySpeech(DummyNarrator.Instance._hoverSpeech));
         }
 

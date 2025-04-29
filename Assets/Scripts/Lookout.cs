@@ -1,5 +1,6 @@
 using UnityEngine;
 
+// Decrease the volume based on the angle between the camera and the object
 public class VolumeBasedOnAngle : MonoBehaviour
 {
     [Header("Audio Settings")]
@@ -9,6 +10,7 @@ public class VolumeBasedOnAngle : MonoBehaviour
     [Header("Angle Settings")]
     [SerializeField] private float maxAngle = 50f;  // Max angle where volume becomes 0
     [SerializeField] private AnimationCurve volumeCurve = AnimationCurve.Linear(0, 1, 180, 0);  // Curve for volume change
+    
     
     private void Start()
     {

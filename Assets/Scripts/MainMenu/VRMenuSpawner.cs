@@ -12,7 +12,6 @@ public class VRMenuSpawner : MonoBehaviour
     public GameObject buttonPrefab; // Prefab for menu buttons (with colliders)
     
     [Header("Menu Options")]
-    public List<string> menuDisplayNames; // Displayed names (e.g., "Start Game")
     public List<string> menuSceneNames; // Corresponding scene names (e.g., "MainScene")
     
     [Header("Placement Settings")]
@@ -21,22 +20,18 @@ public class VRMenuSpawner : MonoBehaviour
     public float buttonWidth = 0.5f; // Width of each button
     public float rotationStep = 50f; // Angle between buttons
 
-    private Dictionary<GameObject, string> buttonSceneMap = new Dictionary<GameObject, string>();
+    private Dictionary<GameObject, string> buttonSceneMap = new Dictionary<GameObject, string>(); // Map buttons to scene names
 
     private void Start()
     {
         GenerateMenu();
     }
 
+    // I wanted to have the buttons in a circle around the player so the buttons are boxes 
+    // evenly spaced and facing the player 
     private void GenerateMenu()
     {
-        if (menuDisplayNames.Count != menuSceneNames.Count)
-        {
-            Debug.LogError("Menu Display Names and Scene Names lists must be the same length!");
-            return;
-        }
-
-        int buttonCount = menuDisplayNames.Count;
+        int buttonCount = menuSceneNames.Count;
         float totalAngle = (buttonCount - 1) * rotationStep; // Spread buttons evenly
 
         for (int i = 0; i < buttonCount; i++)
@@ -45,11 +40,10 @@ public class VRMenuSpawner : MonoBehaviour
             Vector3 buttonPosition = playerHead.position + Quaternion.Euler(0, angle, 0) * Vector3.forward * menuDistance;
             buttonPosition.y = menuHeight; // Set height
 
-            // Spawn button
+            // Spawn button (it's a box with a collider)
             GameObject button = Instantiate(buttonPrefab, buttonPosition, Quaternion.identity);
             button.gameObject.SetActive(true);
             button.transform.LookAt(new Vector3(playerHead.position.x, button.transform.position.y, playerHead.position.z)); // Face the player
-            button.name = menuDisplayNames[i]; // Set display name for debugging
 
             // Save button-scene mapping
             buttonSceneMap[button] = menuSceneNames[i];
@@ -58,25 +52,16 @@ public class VRMenuSpawner : MonoBehaviour
             VRMenuButton menuButton = button.GetComponent<VRMenuButton>();
             if (menuButton)
             {
-                menuButton.Initialize(menuDisplayNames[i], menuSceneNames[i], this);
+                menuButton.Initialize(menuSceneNames[i], this);
             }
         }
     }
 
+    // when the button is hovered, and the player press A, it will call this function
     public void SelectButton(GameObject button)
     {
         if (buttonSceneMap.TryGetValue(button, out string sceneName))
         {
-            IEnumerator ReloadXR()
-            {
-                XRGeneralSettings.Instance.Manager.DeinitializeLoader();
-                yield return null;  // Attendre 1 frame
-                yield return null;  // Attendre 1 autre frame
-                XRGeneralSettings.Instance.Manager.InitializeLoaderSync();
-                XRGeneralSettings.Instance.Manager.StartSubsystems();
-            }
-            //StartCoroutine(ReloadXR());
-            Debug.Log($"Loading Scene: {sceneName}");
             SceneManager.LoadScene(sceneName);
         }
     }

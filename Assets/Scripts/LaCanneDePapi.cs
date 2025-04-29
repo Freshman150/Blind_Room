@@ -6,17 +6,17 @@ using UnityEngine.XR.Interaction.Toolkit.Inputs.Haptics;
 public class LaCanneDePapi : MonoBehaviour
 {
     [Header("Input Actions")]
-    [SerializeField] private InputActionReference leftClickInput;   
-    [SerializeField] private InputActionReference rightClickInput;  
+    [SerializeField] private InputActionReference leftClickInput;  // Left click input action
+    [SerializeField] private InputActionReference rightClickInput;  // Right click input action
 
     [Header("Haptics")]
-    [SerializeField] private HapticImpulsePlayer lefthandHapticImpulsePlayer;
-    [SerializeField] private HapticImpulsePlayer righthandHapticImpulsePlayer;
+    [SerializeField] private HapticImpulsePlayer lefthandHapticImpulsePlayer; // Left hand haptic player
+    [SerializeField] private HapticImpulsePlayer righthandHapticImpulsePlayer; // Right hand haptic player 
 
     [Header("Ray Settings")]
     [SerializeField] private float rayLength = 10f;
-    [SerializeField] private float minHapticDuration = 0.05f;
-    [SerializeField] private float maxHapticDuration = 0.2f;
+    [SerializeField] private float minHapticDuration = 0.05f; 
+    [SerializeField] private float maxHapticDuration = 0.2f; // Duration based on distance
     [SerializeField] private float hapticInterval = 0.3f;  // Interval between impulses
 
     private bool isLeftButtonPressed = false;
@@ -25,6 +25,8 @@ public class LaCanneDePapi : MonoBehaviour
     private float lastLeftHapticTime;
     private float lastRightHapticTime;
 
+    // Change pressed values to true when the button is pressed
+    // (could use function when the button is pressed)
     private void OnEnable()
     {
         leftClickInput.action.Enable();
@@ -37,6 +39,7 @@ public class LaCanneDePapi : MonoBehaviour
         rightClickInput.action.canceled += _ => isRightButtonPressed = false;
     }
 
+    //never used but still
     private void OnDisable()
     {
         leftClickInput.action.Disable();
@@ -61,47 +64,43 @@ public class LaCanneDePapi : MonoBehaviour
         }
     }
 
+    //  create the ray from the controller up to raylength meters 
+    // if it hits then there is an object and play the haptic impulse
+    // and play the sound of the object material
     private void FireRay(HapticImpulsePlayer player, Color rayColor)
     {
+        // Create a ray from the controller position in the forward direction
         Transform controllerTransform = player.gameObject.transform;
         Ray ray = new Ray(controllerTransform.position, controllerTransform.forward + controllerTransform.up *0.5f);
 
-        // Draw the ray for visualization
-        Debug.DrawRay(ray.origin, ray.direction * rayLength, rayColor);
+        if (!Physics.Raycast(ray, out RaycastHit hit, rayLength)) return;
+        float distance = hit.distance;
 
-        if (Physics.Raycast(ray, out RaycastHit hit, rayLength))
+        // Intensity and duration based on proximity
+        float intensity = Mathf.Clamp01(1 - (distance / rayLength));
+        float duration = Mathf.Lerp(minHapticDuration, maxHapticDuration, intensity);
+
+        // Send haptic impulse
+        player.SendHapticImpulse(intensity, duration, 0.5f);
+        
+        // Play hit object material sound
+        Object obj = hit.collider.GetComponent<Object>();
+        if (!obj) return;
+        
+        Mat mat = obj.material;
+        switch (mat)
         {
-            
-            float distance = hit.distance;
-
-            // Intensity and duration based on proximity
-            float intensity = Mathf.Clamp01(1 - (distance / rayLength));
-            float duration = Mathf.Lerp(minHapticDuration, maxHapticDuration, intensity);
-
-            // Send haptic impulse
-            player.SendHapticImpulse(intensity, duration, 0.5f);
-            
-            // Play hit object material sound
-            Object obj = hit.collider.GetComponent<Object>();
-            if (obj != null)
-            {
-                Mat mat = obj.material;
-                switch (mat)
-                {
-                    case Mat.METAL:
-                        AudioManagerController.PlayAudioOnce(Audio.METALSOUND, 0.5f);
-                        break;
-                    case Mat.STONE:
-                        AudioManagerController.PlayAudioOnce(Audio.STONESCRATCH, 0.5f);
-                        break;
-                    case Mat.WOOD:
-                        AudioManagerController.PlayAudioOnce(Audio.WOODSCRATCH, 0.5f);
-                        break;
-                }
-            }
-
-            // Debug info
-            Debug.Log($"Haptic Impulse: Intensity = {intensity:F2}, Duration = {duration:F2}, Distance = {distance:F2}");
+            case Mat.METAL:
+                AudioManagerController.PlayAudioOnce(Audio.METALSOUND, 0.5f);
+                break;
+            case Mat.STONE:
+                AudioManagerController.PlayAudioOnce(Audio.STONESCRATCH, 0.5f);
+                break;
+            case Mat.WOOD:
+                AudioManagerController.PlayAudioOnce(Audio.WOODSCRATCH, 0.5f);
+                break;
         }
+        
+        
     }
 }

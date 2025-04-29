@@ -1,7 +1,8 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class TST : MonoBehaviour
+//everything is in the name
+public class UseLidarOnClick : MonoBehaviour
 {
     [SerializeField] private InputActionReference leftClickInput;   
     [SerializeField] private InputActionReference rightClickInput;   
@@ -16,7 +17,6 @@ public class TST : MonoBehaviour
 
     private void OnClickDetected(InputAction.CallbackContext context)
     {
-        Debug.Log("Click détecté ! Activation du Lidar.");
         LidarSystem.TriggerClickDetected();
     }
 }

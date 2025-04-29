@@ -3,7 +3,7 @@ using System.Net.Http;
 using TMPro;
 using UnityEngine;
 using Newtonsoft.Json;
-
+//send a message to a discord webhook when the game is finished
 public class Timer : MonoBehaviour
 {
     private static float startTime;
@@ -29,6 +29,7 @@ public class Timer : MonoBehaviour
         startTime = Time.time;
     }
 
+    //send the message to the discord webhook
     public static void End()
     {
         string webhookUrl = "https://discord.com/api/webhooks/1359426393578143897/vKaro61MCTOUo8ctkept_mpAPAJ3ls8x-ZrziWtFAsof-EMIi8ORfpFFx8c0f2gRP6nq";

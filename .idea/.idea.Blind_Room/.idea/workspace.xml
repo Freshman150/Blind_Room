@@ -5,7 +5,19 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="9b2e0f82-dd70-4a1b-93ef-a6c18d6040e1" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.Blind_Room/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Blind_Room/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/LaCanneDePapi.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/LaCanneDePapi.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/LidarSystem.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/LidarSystem.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Lookout.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Lookout.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/MainMenu/DummyNarrator.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/MainMenu/DummyNarrator.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/MainMenu/VRMenuButton.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/MainMenu/VRMenuButton.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/MainMenu/VRMenuRaycaster.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/MainMenu/VRMenuRaycaster.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/MainMenu/VRMenuSpawner.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/MainMenu/VRMenuSpawner.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/TST.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/UseLidarOnClick.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/TST.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/UseLidarOnClick.cs.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Timer.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Timer.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/TongueClickDetector.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/TongueClickDetector.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/VRProximityHaptics.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/VRProximityHaptics.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -112,7 +124,8 @@
       <workItem from="1743646427632" duration="8558000" />
       <workItem from="1743712365592" duration="6116000" />
       <workItem from="1744180813051" duration="6499000" />
-      <workItem from="1745356250800" duration="1259000" />
+      <workItem from="1745356250800" duration="1854000" />
+      <workItem from="1745963950458" duration="2174000" />
     </task>
     <servers />
   </component>

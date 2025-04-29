@@ -24,7 +24,6 @@ public class LidarSystem : MonoBehaviour
     public static event Action OnClickDetected; // Event to trigger Lidar
     private float lastLidarScan;
     
-    
 
     void Start()
     {
@@ -45,6 +44,7 @@ public class LidarSystem : MonoBehaviour
         OnClickDetected -= StartLidarScan;
     }
 
+    // start the lidar scan when the event is triggered
     private void StartLidarScan()
     {
         if( Time.time - lastLidarScan < minSpamButton)
@@ -54,6 +54,7 @@ public class LidarSystem : MonoBehaviour
         StartCoroutine(SpawnPointsOverTime());
     }
 
+    // Coroutine to spawn points over time
     private IEnumerator SpawnPointsOverTime()
     {
         while (pointsLeftToSpawn > 0)
@@ -68,6 +69,7 @@ public class LidarSystem : MonoBehaviour
         }
     }
 
+    // Spawn a point at a random position based on headset position 
     private void SpawnPoint()
     {
         // Get or recycle a point
@@ -81,7 +83,7 @@ public class LidarSystem : MonoBehaviour
             point = activePoints.Dequeue();
         }
 
-        // Set position based on random raycast from headset
+        // Set position based on random raycast from headset 
         Vector3 direction = GetRandomDirection();
         if (Physics.Raycast(headsetTransform.position, direction, out RaycastHit hit))
         {
@@ -101,15 +103,17 @@ public class LidarSystem : MonoBehaviour
     private Vector3 GetRandomDirection()
     {
         // Generates an approximately evenly distributed direction
+        // may tweak this to make it more random (the closer to the headset, the more points accumulated but we want a spaced out effect)
         Vector3 randomDirection = UnityEngine.Random.onUnitSphere;
-        randomDirection += new Vector3(
+        randomDirection += new Vector3( // Small noise
             UnityEngine.Random.Range(-0.1f, 0.1f),
             UnityEngine.Random.Range(-0.1f, 0.1f),
-            UnityEngine.Random.Range(-0.1f, 0.1f) // Small noise
+            UnityEngine.Random.Range(-0.1f, 0.1f) 
         );
         return randomDirection.normalized;
     }
 
+    // Coroutine to deactivate point after a certain time
     private IEnumerator DeactivatePointAfterTime(GameObject point)
     {
         float randomDelay = UnityEngine.Random.Range(-1f, 1f);

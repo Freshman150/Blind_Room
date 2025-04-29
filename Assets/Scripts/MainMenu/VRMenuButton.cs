@@ -2,13 +2,11 @@ using UnityEngine;
 
 public class VRMenuButton : MonoBehaviour
 {
-    private string displayName;
-    private string sceneName;
-    private VRMenuSpawner menuSpawner;
+    private string sceneName; // the scene to load when this button is selected
+    private VRMenuSpawner menuSpawner; // reference to the menu spawner
 
-    public void Initialize(string display, string scene, VRMenuSpawner spawner)
+    public void Initialize(string scene, VRMenuSpawner spawner)
     {
-        displayName = display;
         sceneName = scene;
         menuSpawner = spawner;
     }
@@ -16,10 +14,5 @@ public class VRMenuButton : MonoBehaviour
     public void Select()
     {
         menuSpawner.SelectButton(gameObject);
-    }
-
-    public string GetDisplayName()
-    {
-        return displayName;
     }
 }

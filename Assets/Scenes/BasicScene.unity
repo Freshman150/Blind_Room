@@ -4975,7 +4975,7 @@ GameObject:
   - component: {fileID: 765038742}
   - component: {fileID: 765038743}
   m_Layer: 0
-  m_Name: tst
+  m_Name: useLidarOnClick
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5616,7 +5616,7 @@ GameObject:
   - component: {fileID: 891476998}
   - component: {fileID: 891476999}
   m_Layer: 0
-  m_Name: cannedepapi (1)
+  m_Name: 'cannedepapi '
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

@@ -1,10 +1,12 @@
 using System.Collections;
 using UnityEngine;
 
+//only used in the main menu
 public class DummyNarrator : MonoBehaviour
 {
     public static DummyNarrator Instance { get; private set; }
 
+    //the 3 differents speech clips played (when the user do what the variable name says)
     public AudioClip _beginningSpeech;
     public AudioClip _hoverSpeech;
     public AudioClip _onClickSpeech;
@@ -16,16 +18,8 @@ public class DummyNarrator : MonoBehaviour
         else
             Destroy(gameObject);
     }
-    private void Start()
-    {
-        //StartCoroutine(PlaySpeech(_beginningSpeech));
-    }
 
-    public void ReadOption(string option)
-    {
-        Debug.Log($"Narrator: {option}");
-    }
-
+    // Play speech for the main menu 
     public IEnumerator PlaySpeech(AudioClip audio)
     {
         AudioSource audioSource = GetComponent<AudioSource>();

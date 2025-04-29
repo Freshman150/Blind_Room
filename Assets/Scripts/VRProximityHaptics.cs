@@ -32,12 +32,13 @@ public class VRProximityHaptics : MonoBehaviour
     private bool leftInsideInnerSphere = false;
     private bool rightInsideInnerSphere = false;
 
-    private int environmentLayer = 8;
-    private int lidarTriggerLayer = 7;
-    private int lidar2TriggerLayer = 9;
+    private int environmentLayer = 8; //used for the environment layer 
+    private int lidarTriggerLayer = 7; //used for the first object layer
+    private int lidar2TriggerLayer = 9; //used for the second object layer
 
     private void Update()
     {
+        // process proximity for left controllers
         ProcessProximity(
             leftController,
             leftHapticPlayer,
@@ -45,7 +46,8 @@ public class VRProximityHaptics : MonoBehaviour
             ref lastLeftHapticTime,
             ref leftInsideInnerSphere
         );
-
+        
+        // process proximity for right controllers
         ProcessProximity(
             rightController,
             rightHapticPlayer,
@@ -55,6 +57,7 @@ public class VRProximityHaptics : MonoBehaviour
         );
     }
 
+    
     private void ProcessProximity(
         Transform controller,
         HapticImpulsePlayer hapticPlayer,
@@ -69,16 +72,18 @@ public class VRProximityHaptics : MonoBehaviour
         bool isTouchingInnerSphere = false;
         bool showBlue = false;
 
+        // get the closest collider and check if it's in the inner sphere
         foreach (var col in hitColliders)
         {
             if (col.gameObject == controller.gameObject)
                 continue;
-
+            
+            //get the closest point on the collider
             int colLayer = col.gameObject.layer;
             Vector3 closest = col.ClosestPointOnBounds(controller.position);
             float distance = Vector3.Distance(controller.position, closest);
 
-            // Évite les fausses distances nulles
+            //  evade false distance (there are some fake distance values that are 0 sometimes) 
             if (distance < 0.01f)
                 distance = Vector3.Distance(controller.position, col.bounds.center);
 
@@ -86,10 +91,10 @@ public class VRProximityHaptics : MonoBehaviour
             if (colLayer != environmentLayer && colLayer != lidarTriggerLayer && colLayer != lidar2TriggerLayer)
                 continue;
 
-            // 🔵 Check if it's a Lidar-Trigger object (layer 7)
+            // 🔵 Check if it's an object (meaning you can interact with it) (layer 7 or 9)
             if (colLayer == lidarTriggerLayer || colLayer == lidar2TriggerLayer)
             {
-                // Show blue sphere if Lidar layer is detected
+                // Show blue sphere if object layer is detected
                 showBlue = true;
             }
 
@@ -125,11 +130,11 @@ public class VRProximityHaptics : MonoBehaviour
 
             SetSphereMaterial(innerSphereVisual, showBlue ? blueMaterial : defaultRedMaterial);
         }
-        else
+        else 
         {
             isInsideInnerSphere = false;
 
-            // 🟢 Show sphere in blue if Lidar layer is detected (even if not in inner radius)
+            // 🟢 Show sphere in blue if object layer is detected (even if not in inner radius)
             if (showBlue)
             {
                 if (innerSphereVisual && !innerSphereVisual.activeSelf)
@@ -157,30 +162,12 @@ public class VRProximityHaptics : MonoBehaviour
         }
     }
 
+    //chance color of the sphere depending if it"s an object or not
     private void SetSphereMaterial(GameObject sphere, Material mat)
     {
         if (sphere.TryGetComponent<Renderer>(out Renderer rend))
         {
             rend.material = mat;
-        }
-    }
-
-    private void OnDrawGizmos()
-    {
-        if (leftController)
-        {
-            Gizmos.color = Color.red;
-            Gizmos.DrawWireSphere(leftController.position, outerSphereRadius);
-            Gizmos.color = Color.yellow;
-            Gizmos.DrawWireSphere(leftController.position, innerSphereRadius);
-        }
-
-        if (rightController)
-        {
-            Gizmos.color = Color.blue;
-            Gizmos.DrawWireSphere(rightController.position, outerSphereRadius);
-            Gizmos.color = Color.cyan;
-            Gizmos.DrawWireSphere(rightController.position, innerSphereRadius);
         }
     }
 }
